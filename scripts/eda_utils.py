@@ -121,3 +121,29 @@ def detect_outliers(df):
 
     plt.tight_layout()
     plt.show()
+
+def evaluate_models(X_train, y_train, X_test, y_test):
+    models = {
+        'Logistic Regression': LogisticRegression(max_iter=200),
+        'Decision Tree': DecisionTreeClassifier(),
+        'Random Forest': RandomForestClassifier(),
+        'Gradient Boosting': GradientBoostingClassifier()
+    }
+
+    for name, model in models.items():
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred)
+        recall = recall_score(y_test, y_pred)
+        f1 = f1_score(y_test, y_pred)
+        roc_auc = roc_auc_score(y_test, y_pred)
+
+        print(f'{name} Performance:')
+        print(f'Accuracy: {accuracy:.2f}')
+        print(f'Precision: {precision:.2f}')
+        print(f'Recall: {recall:.2f}')
+        print(f'F1 Score: {f1:.2f}')
+        print(f'ROC-AUC: {roc_auc:.2f}')
+        print()
